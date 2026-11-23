@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tylor White | WhatsApp Bots, Websites, Apps &amp; Ethical Hacking</title>
+<meta name="description" content="Tylor White builds WhatsApp bots, websites and mobile apps, collaborates on GitHub, and does ethical hacking. Message me on WhatsApp.">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --bg:#0f1b2d; --panel:rgba(15,27,45,.72); --line:#26395a; --text:#e9edf5; --muted:#9fb0cb;
+  --accent:#8b9bff; --wa:#25d366; --wa-dark:#128c4a;
+}
+
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg) url("background.gif") center/cover no-repeat fixed;color:var(--text);position:relative;font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(10,18,32,.72),rgba(10,18,32,.86));z-index:-1}
+h1,h2,h3,.brand{font-family:"Bricolage Grotesque",system-ui,sans-serif}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+
+/* header */
+header{padding:18px 0}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:20px;text-decoration:none}
+.logo{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid var(--accent)}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-weight:500}
+nav a:hover{color:var(--text)}
+
+/* hero */
+.hero{padding:48px 0 70px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+h1{font-size:clamp(40px,6.4vw,72px);line-height:1.02;font-weight:800;letter-spacing:-2px}
+.lead{margin:22px 0 30px;color:var(--muted);max-width:30em;font-size:19px}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--wa);color:#04220f;font-weight:500;text-decoration:none;padding:15px 24px;border-radius:999px;font-size:18px;transition:background .2s}
+.btn:hover{background:#3be37c}
+.btn i{font-size:26px}
+.num{display:block;margin-top:12px;color:var(--muted);font-size:15px}
+
+/* chat demo: the one memorable element */
+.chat{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px;max-width:420px;margin-left:auto;width:100%}
+.chat-top{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px;font-weight:500}
+.chat-top i{color:var(--wa);font-size:26px}
+.chat-top small{display:block;color:var(--muted);font-weight:400;font-size:13px;line-height:1.2}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;margin:0 0 10px;font-size:15px;line-height:1.45}
+.in{background:#0f1b2d;border-bottom-left-radius:4px}
+.out{background:var(--wa-dark);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.msg.late{opacity:0;animation:pop .4s ease forwards}
+.msg.late:nth-of-type(3){animation-delay:.9s}
+.msg.late:nth-of-type(4){animation-delay:1.8s}
+.msg.late:nth-of-type(5){animation-delay:2.7s}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* sections */
+section{padding:60px 0;border-top:1px solid var(--line);background:rgba(10,18,32,.35)}
+h2{font-size:clamp(28px,4vw,40px);letter-spacing:-1px;margin-bottom:10px}
+.sub{color:var(--muted);max-width:36em;margin-bottom:32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card i{font-size:24px;color:var(--accent);margin-bottom:14px;display:block}
+.card h3{font-size:20px;margin-bottom:6px}
+.card p{color:var(--muted);font-size:15.5px}
+
+/* social */
+.social{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px}
+.social a{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--panel);border:1px solid var(--line);font-size:24px;text-decoration:none;transition:transform .2s,background .2s,color .2s}
+.social a:hover{transform:translateY(-4px);background:var(--accent);color:#0f1b2d}
+.social a.wa:hover{background:var(--wa);color:#04220f}
+
+footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+
+.float-wa{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#04220f;display:grid;place-items:center;font-size:34px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:10}
+
+@media (max-width:800px){
+  .hero .wrap{grid-template-columns:1fr}
+  .chat{margin:0}
+  nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .msg.late{animation:none;opacity:1}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Tylor White, home">
+      <img class="logo" src="logo.jpg" alt="Tylor White logo" width="46" height="46"> Tylor White
+    </a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>I build bots, sites and apps that work for you.</h1>
+        <p class="lead">I'm Tylor White. I develop WhatsApp bots, websites and mobile apps, and I test systems for weaknesses as an ethical hacker. Tell me what you need and I'll reply on WhatsApp.</p>
+        <a class="btn" href="https://wa.me/93768814785?text=Hi%20Tylor%2C%20I%20found%20your%20website%20and%20I%27d%20like%20to%20work%20with%20you." target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Chat on WhatsApp
+        </a>
+        <span class="num">+93 76 881 4785</span>
+      </div>
+
+      <div class="chat" aria-label="Example of a WhatsApp bot conversation">
+        <div class="chat-top"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><div>Your business bot<small>Example conversation</small></div></div>
+        <p class="msg in">Hi! What would you like to do today?</p>
+        <p class="msg out">Check my order status</p>
+        <p class="msg in late">Sure. Send me your order number.</p>
+        <p class="msg out late">#4821</p>
+        <p class="msg in late">Order #4821 is on its way and arrives tomorrow.</p>
+      </div>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <h2>What I do</h2>
+      <p class="sub">From a first idea to a finished product, I handle the building and the security.</p>
+      <div class="grid">
+        <div class="card"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><h3>WhatsApp bots</h3><p>Automated replies, order tracking, bookings and customer support that run around the clock.</p></div>
+        <div class="card"><i class="fa-solid fa-globe" aria-hidden="true"></i><h3>Website creation</h3><p>Fast, mobile-friendly websites for businesses, portfolios and personal brands.</p></div>
+        <div class="card"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><h3>Mobile app development</h3><p>Android and cross-platform apps built around what your users need.</p></div>
+        <div class="card"><i class="fa-brands fa-github" aria-hidden="true"></i><h3>GitHub collaboration</h3><p>Open to team projects and open source. I work with pull requests, issues and clean commits.</p></div>
+        <div class="card"><i class="fa-solid fa-user-shield" aria-hidden="true"></i><h3>Ethical hacking</h3><p>Authorized security testing to find and fix weaknesses before attackers do.</p></div>
+        <div class="card"><i class="fa-solid fa-code" aria-hidden="true"></i><h3>And more</h3><p>Have something different in mind? Message me and we'll see how I can help.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2>Get in touch</h2>
+      <p class="sub">The fastest way to reach me is WhatsApp. You can also find me on these platforms.</p>
+      <a class="btn" href="https://wa.me/93768814785?text=Hi%20Tylor%2C%20I%27d%20like%20to%20work%20with%20you." target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Message +93 76 881 4785
+      </a>
+
+      <!-- REPLACE each YOUR-USERNAME below with your real profile name -->
+      <div class="social" style="margin-top:32px">
+        <a class="wa" href="https://wa.me/93768814785" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://github.com/YOUR-USERNAME" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://t.me/YOUR-USERNAME" target="_blank" rel="noopener" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="https://www.instagram.com/YOUR-USERNAME" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/YOUR-USERNAME" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://x.com/YOUR-USERNAME" target="_blank" rel="noopener" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://www.linkedin.com/in/YOUR-USERNAME" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.tiktok.com/@YOUR-USERNAME" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.youtube.com/@YOUR-USERNAME" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">&copy; <span id="yr">2026</span> Tylor White. All rights reserved.</div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/93768814785" target="_blank" rel="noopener" aria-label="Chat with Tylor on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
