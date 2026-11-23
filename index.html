@@ -77,6 +77,27 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 
 .float-wa{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#04220f;display:grid;place-items:center;font-size:34px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:10}
 
+
+/* chatbot */
+.bot-launch{position:fixed;right:18px;bottom:90px;height:52px;padding:0 20px 0 16px;border:0;border-radius:999px;background:var(--accent);color:#0f1b2d;font:500 16px "IBM Plex Sans",sans-serif;display:flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:11}
+.bot-launch i{font-size:20px}
+.bot{position:fixed;right:18px;bottom:90px;width:360px;max-width:calc(100vw - 36px);height:480px;max-height:calc(100vh - 120px);background:#111f35;border:1px solid var(--line);border-radius:18px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 12px 36px rgba(0,0,0,.5);z-index:12}
+.bot.open{display:flex}
+.bot-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--accent);color:#0f1b2d;font-weight:500}
+.bot-head img{width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:50% 20%}
+.bot-head small{display:block;font-size:12px;line-height:1.1;opacity:.8}
+.bot-head button{margin-left:auto;background:none;border:0;font-size:20px;color:inherit;cursor:pointer;padding:6px}
+.bot-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column}
+.bot-log .msg{animation:none;opacity:1}
+.bot-log a{color:#7ff0ac}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 14px 10px}
+.chips button{background:transparent;border:1px solid var(--accent);color:var(--text);border-radius:999px;padding:6px 12px;font:14px "IBM Plex Sans",sans-serif;cursor:pointer}
+.chips button:hover{background:var(--accent);color:#0f1b2d}
+.bot-form{display:flex;gap:8px;padding:10px 14px 14px;border-top:1px solid var(--line)}
+.bot-form input{flex:1;min-width:0;background:#0f1b2d;border:1px solid var(--line);border-radius:999px;padding:10px 14px;color:var(--text);font:15px "IBM Plex Sans",sans-serif}
+.bot-form button{border:0;border-radius:50%;width:42px;height:42px;background:var(--wa);color:#04220f;font-size:16px;cursor:pointer}
+@media (max-width:800px){.bot-launch span{display:none}.bot-launch{width:52px;padding:0;justify-content:center}}
+
 @media (max-width:800px){
   .hero .wrap{grid-template-columns:1fr}
   .chat{margin:0}
@@ -170,6 +191,76 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 
 <a class="float-wa" href="https://wa.me/93768814785" target="_blank" rel="noopener" aria-label="Chat with Tylor on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+
+<button class="bot-launch" id="botOpen" aria-label="Open chat assistant"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i><span>Ask me</span></button>
+<div class="bot" id="bot" role="dialog" aria-label="Chat assistant">
+  <div class="bot-head"><img src="logo.jpg" alt=""><div>Tylor's Assistant<small>Instant answers</small></div><button id="botClose" aria-label="Close chat"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="bot-log" id="botLog" aria-live="polite"></div>
+  <div class="chips" id="botChips"></div>
+  <form class="bot-form" id="botForm"><input id="botInput" type="text" placeholder="Type your question..." autocomplete="off" aria-label="Your message"><button type="submit" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button></form>
+</div>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  var WA='https://wa.me/93768814785?text=';
+  var log=document.getElementById('botLog'),chips=document.getElementById('botChips'),
+      box=document.getElementById('bot'),inp=document.getElementById('botInput');
+  var topics=[
+    {k:['whatsapp bot','bot','automat','chatbot'],a:'Tylor builds WhatsApp bots for order tracking, bookings, FAQs and customer support that reply 24/7.'},
+    {k:['website','web site','landing','portfolio','web'],a:'Tylor creates fast, mobile-friendly websites for businesses, portfolios and personal brands.'},
+    {k:['app','android','ios','mobile'],a:'Tylor develops Android and cross-platform mobile apps built around what your users need.'},
+    {k:['github','collab','team','open source','repo'],a:'Tylor is open to GitHub collaboration and works with pull requests, issues and clean commits.'},
+    {k:['hack','security','pentest','vulnerab','secure'],a:'Tylor does ethical hacking: authorized security testing to find and fix weaknesses before attackers do.'},
+    {k:['price','cost','how much','quote','rate','pay'],a:'Pricing depends on the project. Message Tylor on WhatsApp with what you need and you will get a quote.'},
+    {k:['contact','reach','number','phone','whatsapp','talk','hire','call'],a:'The fastest way to reach Tylor is WhatsApp: +93 76 881 4785.'},
+    {k:['hi','hello','hey','good morning','good evening'],a:'Hello! I can answer questions about Tylor\'s services. What would you like to know?'}
+  ];
+  var quick=['WhatsApp bots','Websites','Mobile apps','Ethical hacking','Pricing'];
+
+  function add(text,who,withLink){
+    var p=document.createElement('p');p.className='msg '+(who==='me'?'out':'in');p.textContent=text;
+    if(withLink){p.appendChild(document.createElement('br'));
+      var a=document.createElement('a');a.href=WA+encodeURIComponent(withLink);a.target='_blank';a.rel='noopener';
+      a.textContent='Continue on WhatsApp';p.appendChild(a);}
+    log.appendChild(p);log.scrollTop=log.scrollHeight;return p;
+  }
+  function kwReply(q){
+    var t=q.toLowerCase(),hit=null;
+    for(var i=0;i<topics.length&&!hit;i++)for(var j=0;j<topics[i].k.length;j++)
+      if(t.indexOf(topics[i].k[j])>-1){hit=topics[i];break;}
+    setTimeout(function(){
+      if(hit)add(hit.a,'bot',hit.k[0]==='hi'?null:'Hi Tylor, I have a question about: '+q);
+      else add('I am not sure about that one. Tylor can answer it directly on WhatsApp.','bot','Hi Tylor, I have a question: '+q);
+    },500);
+  }
+
+  // PASTE your Cloudflare Worker URL here (e.g. https://tylor-bot.yourname.workers.dev)
+  var WORKER_URL='https://mute-wood-d180.254ke.workers.dev';
+  var hist=[];
+  function reply(q){
+    if(WORKER_URL.indexOf('http')!==0){kwReply(q);return;}
+    hist.push({role:'user',content:q});hist=hist.slice(-8);
+    var wait=add('Typing...','bot');
+    fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:hist})})
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(d){
+        wait.remove();hist.push({role:'assistant',content:d.reply});
+        add(d.reply,'bot',/whatsapp/i.test(d.reply)?'Hi Tylor, I have a question: '+q:null);
+      })
+      .catch(function(){wait.remove();hist.pop();kwReply(q);});
+  }
+  function send(q){q=q.trim();if(!q)return;add(q,'me');reply(q);}
+  quick.forEach(function(c){var b=document.createElement('button');b.type='button';b.textContent=c;
+    b.onclick=function(){send(c)};chips.appendChild(b);});
+  document.getElementById('botForm').onsubmit=function(e){e.preventDefault();send(inp.value);inp.value='';};
+  var started=false;
+  function open(){box.classList.add('open');document.getElementById('botOpen').style.display='none';
+    if(!started){started=true;add('Hi! I am Tylor\'s assistant. Ask me about bots, websites, apps, security or pricing.','bot');}
+    inp.focus();}
+  function close(){box.classList.remove('open');document.getElementById('botOpen').style.display='';}
+  document.getElementById('botOpen').onclick=open;
+  document.getElementById('botClose').onclick=close;
+})();
+</script>
 </body>
 </html>
