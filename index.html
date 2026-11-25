@@ -43,7 +43,7 @@ h1{font-size:clamp(40px,6.4vw,72px);line-height:1.02;font-weight:800;letter-spac
 .btn i{font-size:26px}
 .num{display:block;margin-top:12px;color:var(--muted);font-size:15px}
 
-/* chat demo: the one memorable element */
+/* chat demo */
 .chat{background:#111f35;border:1px solid var(--line);border-radius:18px;overflow:hidden;max-width:420px;margin-left:auto;width:100%;box-shadow:0 12px 36px rgba(0,0,0,.4)}
 .demo-log{padding:14px 14px 4px}
 .chat-top{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px;font-weight:500}
@@ -78,6 +78,14 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 
 .float-wa{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#04220f;display:grid;place-items:center;font-size:34px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:10}
 
+
+/* portfolio gallery */
+.work{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.work figure{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.work .media{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:0;background:#0b1424}
+.work figcaption{padding:12px 16px;font-size:15.5px}
+.work figcaption small{display:block;color:var(--muted);font-size:13.5px}
+[hidden]{display:none !important}
 
 /* chatbot */
 .bot-launch{position:fixed;right:18px;bottom:90px;height:56px;padding:0 20px 0 9px;border:0;border-radius:999px;background:var(--accent);color:#0f1b2d;font:500 16px "IBM Plex Sans",sans-serif;display:flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:11}
@@ -121,6 +129,7 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
     </a>
     <nav>
       <a href="#services">Services</a>
+      <a href="#work" id="workLink" hidden>Portfolio</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -131,7 +140,7 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
     <div class="wrap">
       <div>
         <h1>I build bots, sites and apps that work for you.</h1>
-        <p class="lead">I'm Tylor White. I develop WhatsApp bots, websites and mobile apps, and I test systems for weaknesses as an ethical hacker. Tell me what you need and I'll reply on WhatsApp.</p>
+        <p class="lead">I'm Tylor White. I develop WhatsApp bots, websites and mobile apps, edit videos and images, and test systems for weaknesses as an ethical hacker. Tell me what you need and I'll reply on WhatsApp.</p>
         <a class="btn" href="https://wa.me/93768814785?text=Hi%20Tylor%2C%20I%20found%20your%20website%20and%20I%27d%20like%20to%20work%20with%20you." target="_blank" rel="noopener">
           <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Chat on WhatsApp
         </a>
@@ -162,14 +171,16 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
     <div class="wrap">
       <h2>What I do</h2>
       <p class="sub">From a first idea to a finished product, I handle the building and the security.</p>
-      <div class="grid">
-        <div class="card"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><h3>WhatsApp bots</h3><p>Automated replies, order tracking, bookings and customer support that run around the clock.</p></div>
-        <div class="card"><i class="fa-solid fa-globe" aria-hidden="true"></i><h3>Website creation</h3><p>Fast, mobile-friendly websites for businesses, portfolios and personal brands.</p></div>
-        <div class="card"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><h3>Mobile app development</h3><p>Android and cross-platform apps built around what your users need.</p></div>
-        <div class="card"><i class="fa-brands fa-github" aria-hidden="true"></i><h3>GitHub collaboration</h3><p>Open to team projects and open source. I work with pull requests, issues and clean commits.</p></div>
-        <div class="card"><i class="fa-solid fa-user-shield" aria-hidden="true"></i><h3>Ethical hacking</h3><p>Authorized security testing to find and fix weaknesses before attackers do.</p></div>
-        <div class="card"><i class="fa-solid fa-code" aria-hidden="true"></i><h3>And more</h3><p>Have something different in mind? Message me and we'll see how I can help.</p></div>
-      </div>
+      <div class="grid" id="servicesGrid">
+     </div>
+    </div>
+  </section>
+
+  <section id="work" hidden>
+    <div class="wrap">
+      <h2>My work</h2>
+      <p class="sub">A selection of recent edits and projects.</p>
+      <div class="work" id="workGrid"></div>
     </div>
   </section>
 
@@ -212,22 +223,76 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   <form class="bot-form" id="botForm"><input id="botInput" type="text" placeholder="Type your question..." autocomplete="off" aria-label="Your message"><button type="submit" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button></form>
 </div>
 
+<script src="services.js"></script>
+<script>
+(function(){
+  var g=document.getElementById('servicesGrid');
+  if(typeof SERVICES==='undefined'||!g)return;
+  SERVICES.forEach(function(x){
+    var c=document.createElement('div');c.className='card';
+    var i=document.createElement('i');i.className=x.icon;i.setAttribute('aria-hidden','true');
+    var h=document.createElement('h3');h.textContent=x.title;
+    var p=document.createElement('p');p.textContent=x.text;
+    c.appendChild(i);c.appendChild(h);c.appendChild(p);g.appendChild(c);
+  });
+})();
+</script>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  /* ADD YOUR WORK HERE. Upload the files to the same GitHub folder, then add one line per item:
+     {type:'image',   src:'work1.jpg',  title:'Product photo retouch', note:'Photo editing'},
+     {type:'video',   src:'edit1.mp4',  title:'Promo reel',            note:'Video editing'},
+     {type:'youtube', id:'VIDEO_ID',    title:'Event highlights',      note:'Video editing'}   */
+  var WORK=[
+  ];
+  if(!WORK.length)return;
+  var grid=document.getElementById('workGrid');
+  WORK.forEach(function(w){
+    var f=document.createElement('figure'),m;
+    if(w.type==='video'){m=document.createElement('video');m.src=w.src;m.controls=true;m.preload='metadata';m.playsInline=true;}
+    else if(w.type==='youtube'){m=document.createElement('iframe');m.src='https://www.youtube.com/embed/'+w.id;m.allowFullscreen=true;m.loading='lazy';m.title=w.title||'Video';}
+    else{m=document.createElement('img');m.src=w.src;m.alt=w.title||'Portfolio image';m.loading='lazy';}
+    m.className='media';f.appendChild(m);
+    var c=document.createElement('figcaption');c.textContent=w.title||'';
+    if(w.note){var n=document.createElement('small');n.textContent=w.note;c.appendChild(n);}
+    f.appendChild(c);grid.appendChild(f);
+  });
+  document.getElementById('work').hidden=false;
+  document.getElementById('workLink').hidden=false;
+})();
+
 (function(){
   var WA='https://wa.me/93768814785?text=';
   var log=document.getElementById('botLog'),chips=document.getElementById('botChips'),
       box=document.getElementById('bot'),inp=document.getElementById('botInput');
-  var topics=[
-    {k:['whatsapp bot','bot','automat','chatbot'],a:'Tylor builds WhatsApp bots for order tracking, bookings, FAQs and customer support that reply 24/7.'},
-    {k:['website','web site','landing','portfolio','web'],a:'Tylor creates fast, mobile-friendly websites for businesses, portfolios and personal brands.'},
-    {k:['app','android','ios','mobile'],a:'Tylor develops Android and cross-platform mobile apps built around what your users need.'},
-    {k:['github','collab','team','open source','repo'],a:'Tylor is open to GitHub collaboration and works with pull requests, issues and clean commits.'},
-    {k:['hack','security','pentest','vulnerab','secure'],a:'Tylor does ethical hacking: authorized security testing to find and fix weaknesses before attackers do.'},
-    {k:['price','cost','how much','quote','rate','pay'],a:'Pricing depends on the project. Message Tylor on WhatsApp with what you need and you will get a quote.'},
-    {k:['contact','reach','number','phone','whatsapp','talk','hire','call'],a:'The fastest way to reach Tylor is WhatsApp: +93 76 881 4785.'},
-    {k:['hi','hello','hey','good morning','good evening'],a:'Hello! I can answer questions about Tylor\'s services. What would you like to know?'}
-  ];
-  var quick=['WhatsApp bots','Websites','Mobile apps','Ethical hacking','Pricing'];
+  /* Backup answers are built from services.js (SERVICES and BOT_NOTES), so they follow your edits. */
+  var STOP={the:1,and:1,for:1,with:1,more:1,your:1,development:1,creation:1,service:1,services:1};
+  function stems(w){var o=[w];
+    if(w.length>5&&/ing$/.test(w))o.push(w.slice(0,-3));
+    if(w.length>3&&/s$/.test(w))o.push(w.slice(0,-1));
+    return o;}
+  var svcList=(typeof SERVICES!=='undefined'&&SERVICES.length)?SERVICES:[];
+  var topics=[];
+  var notes=(typeof BOT_NOTES!=='undefined'?BOT_NOTES:'').replace(/\s+/g,' ').trim();
+  topics.push({k:['contact','reach','number','phone','hire','call','talk','message'],a:'The fastest way to reach Tylor is WhatsApp: +93 76 881 4785.'});
+  topics.push({k:['price','cost','much','quote','rate','pay','charge','fee'],
+    a:'Pricing depends on the project. Message Tylor on WhatsApp with what you need and you will get a quote.'+(notes?' '+notes:'')});
+  var titles=svcList.map(function(x){return x.title;}).filter(function(t){return !/^and more$/i.test(t);});
+  if(titles.length)topics.push({k:['service','offer','what do you','what can','help with','do you do'],a:'Tylor offers: '+titles.join(', ')+'. Ask me about any of them.'});
+  svcList.forEach(function(x){
+    var k=[];
+    x.title.toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(' ').forEach(function(w){
+      if(w.length>2&&!STOP[w])stems(w).forEach(function(s){k.push(s);});});
+    (x.keywords||'').split(',').forEach(function(w){w=w.trim().toLowerCase();if(w)k.push(w);});
+    if(k.length)topics.push({k:k,a:x.title+': '+x.text});
+  });
+  topics.push({k:['hi','hello','hey','good morning','good evening'],a:'Hello! I can answer questions about Tylor\'s services. What would you like to know?',noLink:true});
+  var quick=titles.length?titles.slice(0,4).concat(['Pricing']):['WhatsApp bots','Websites','Mobile apps','Pricing'];
+  function has(t,k){return k.length<=3?t.indexOf(' '+k+' ')>-1:t.indexOf(' '+k)>-1;}
+  function kwAnswer(q){
+    var t=' '+q.toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ')+' ',best=null,top=0;
+    topics.forEach(function(tp){var n=0;tp.k.forEach(function(k){if(has(t,k))n++;});if(n>top){top=n;best=tp;}});
+    return best;}
 
   function add(text,who,withLink){
     var p=document.createElement('p');p.className='msg '+(who==='me'?'out':'in');p.textContent=text;
@@ -237,16 +302,14 @@ footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-s
     log.appendChild(p);log.scrollTop=log.scrollHeight;return p;
   }
   function kwReply(q){
-    var t=q.toLowerCase(),hit=null;
-    for(var i=0;i<topics.length&&!hit;i++)for(var j=0;j<topics[i].k.length;j++)
-      if(t.indexOf(topics[i].k[j])>-1){hit=topics[i];break;}
+    var hit=kwAnswer(q);
     setTimeout(function(){
-      if(hit)add(hit.a,'bot',hit.k[0]==='hi'?null:'Hi Tylor, I have a question about: '+q);
+      if(hit)add(hit.a,'bot',hit.noLink?null:'Hi Tylor, I have a question about: '+q);
       else add('I am not sure about that one. Tylor can answer it directly on WhatsApp.','bot','Hi Tylor, I have a question: '+q);
     },500);
   }
 
-  // PASTE your Cloudflare Worker URL here (e.g. https://tylor-bot.yourname.workers.dev)
+  // Your Cloudflare Worker URL
   var WORKER_URL='https://mute-wood-d180.254ke.workers.dev';
   var hist=[];
   function reply(q){
